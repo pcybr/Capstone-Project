@@ -12,6 +12,21 @@ def post_model_list_view(request):
 	}
 	return render(request, template, context)
 
+def post_model_create_view(request):
+    template = "blog/create-view.html"
+    form = PostModelForm(request.POST or None)
+    context = {
+        "form": form
+    }
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        context = {
+            "form": PostModelForm()
+        }
+    return render(request, template, context)
+
+
 def post_model_detail_view(request, id=None):
     obj = get_object_or_404(PostModel, id=id)
     context = {
