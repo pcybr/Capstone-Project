@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import PostModel
 from django.shortcuts import get_object_or_404
-from .forms import PostModelForm
+from .forms import PostModelForm, PostDeleteForm
 from django.views.generic.edit import UpdateView, DeleteView
 
 def post_model_list_view(request):
@@ -43,7 +43,7 @@ def post_model_update_view(request, id=None):
         }
     return render(request, template, context)
     
-def post_model_delete_view(request, pk):
+def post_model_delete_view(request, id=None):
     template = "blog/delete-view.html"
     form = PostDeleteForm(request.POST or None)
     context = {
