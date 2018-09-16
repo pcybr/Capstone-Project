@@ -28,13 +28,15 @@ def post_model_create_view(request):
     return render(request, template, context)
 
 def post_model_update_view(request, id=None):
+    template = "blog/update-view.html"
     obj = get_object_or_404(PostModel, id=id)
     form = PostModelForm(request.POST or None)
     context = {
         "form": form
     }
     if form.is_valid():
-        obj = form.save(commit=False)
+        obj.title = form.cleaned_data['title']
+        obj.content = form.cleaned_data['content']
         obj.save()
         context = {
             "form": PostModelForm()
