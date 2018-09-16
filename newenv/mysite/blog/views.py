@@ -6,11 +6,10 @@ from .forms import PostModelForm
 def post_model_list_view(request):
     qs = PostModel.objects.all()
     template = "blog/list-view.html"
-	context = {
-		"object_list": qs,
-	}
-    
-	return render(request, template, context)
+    context = {
+       	"object_list": qs,
+    }
+    return render(request, template, context)
 
 def post_model_create_view(request):
     template = "blog/create-view.html"
