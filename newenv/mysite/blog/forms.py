@@ -12,3 +12,9 @@ class PostModelForm(forms.ModelForm):
             'content'
         ]
 
+class PostDeleteForm(forms.ModelForm):
+	class Meta:
+		model = PostModel
+		fields = []
+		
+
