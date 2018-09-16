@@ -42,19 +42,20 @@ def post_model_update_view(request, id=None):
             "form": PostModelForm()
         }
     return render(request, template, context)
-# def post_model_delete_view(request, pk):
-#     template = "blog/delete-view.html"
-#     form = PostDeleteForm(request.POST or None)
-#     context = {
-#         "form": form
-#     }
-#     if form.is_valid():
-#         obj = form.save(commit=False)
-#         obj.save()
-#         context = {
-#             "form": PostDeleteForm()
-#         }
-#     return render(request, template, context)
+    
+def post_model_delete_view(request, pk):
+    template = "blog/delete-view.html"
+    form = PostDeleteForm(request.POST or None)
+    context = {
+        "form": form
+    }
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        context = {
+            "form": PostDeleteForm()
+        }
+    return render(request, template, context)
 
 
 
