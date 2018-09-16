@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import PostModel
 from django.shortcuts import get_object_or_404
 from .forms import PostModelForm
+from django.views.generic.edit import UpdateView, DeleteView
 
 def post_model_list_view(request):
     qs = PostModel.objects.all()
@@ -26,8 +27,8 @@ def post_model_create_view(request):
         }
     return render(request, template, context)
 
-def post_model_update_view(request, pk):
-    template = "blog/update-view.html"
+def post_model_update_view(request, id=None):
+    obj = get_object_or_404(PostModel, id=id)
     form = PostModelForm(request.POST or None)
     context = {
         "form": form
@@ -38,8 +39,7 @@ def post_model_update_view(request, pk):
         context = {
             "form": PostModelForm()
         }
-        return render(request, template, context)
-
+    return render(request, template, context)
 # def post_model_delete_view(request, pk):
 #     template = "blog/delete-view.html"
 #     form = PostDeleteForm(request.POST or None)
