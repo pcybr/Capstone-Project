@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import PostModel
 from django.shortcuts import get_object_or_404
 from .forms import PostModelForm, PostDeleteForm
 from django.views.generic.edit import UpdateView, DeleteView
+from django.contrib import messages
 
 def post_model_list_view(request):
     qs = PostModel.objects.all()
@@ -45,16 +46,23 @@ def post_model_update_view(request, id=None):
     
 def post_model_delete_view(request, id=None):
     template = "blog/delete-view.html"
-    form = PostDeleteForm(request.POST or None)
+    obj = get_object_or_404(PostModel, id=id)
+    if request.method == 'POST':
+        obj.delete()
+        messages.success(request, "Post successfully deleted!")
+        return HttpResponseRedirect("/blog/")
     context = {
-        "form": form
+        "id": obj.id
     }
-    if form.is_valid():
-        obj = form.save(commit=False)
-        obj.save()
-        context = {
-            "form": PostDeleteForm()
-        }
+
+    # form = PostDeleteForm(request.POST or None)
+    # if form.is_valid():
+    #     obj = form.save(commit=False)
+    #     obj.save()
+    #     context = {
+    #         "form": PostDeleteForm()
+    #     }
+
     return render(request, template, context)
 
 
