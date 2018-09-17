@@ -52,7 +52,8 @@ def post_model_delete_view(request, id=None):
         messages.success(request, "Post successfully deleted!")
         return HttpResponseRedirect("/blog/")
     context = {
-        "id": obj.id
+        "id": obj.id,
+        "title": obj.title
     }
 
     # form = PostDeleteForm(request.POST or None)
